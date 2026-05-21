@@ -6,6 +6,7 @@ import com.example.employee.service.EmployeeService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
 
+@CrossOrigin(origins = ["http://localhost:3000"])
 @RestController
 @RequestMapping("api/employees")
 class EmployeeController (private val employeeService: EmployeeService) {
@@ -50,6 +52,7 @@ class EmployeeController (private val employeeService: EmployeeService) {
     @PutMapping("/{id}")
     fun updateEmployee(@PathVariable id: String, @Valid @RequestBody dto: EmployeeDto): ResponseEntity<Employee> {
         val updatedDate = Employee(
+            id,
             firstName = dto.firstName,
             lastName = dto.lastName,
             email = dto.email,
