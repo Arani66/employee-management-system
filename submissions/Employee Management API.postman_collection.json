@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "d7e404ae-009d-424a-b594-eb07834ae64f",
+		"name": "Employee Management API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "54982059",
+		"_collection_link": "https://arani-m-3167127.postman.co/workspace/Arani's-Workspace~032285b7-bd02-4d84-8a6a-a94d955124cb/collection/54982059-d7e404ae-009d-424a-b594-eb07834ae64f?action=share&source=collection_link&creator=54982059"
+	},
+	"item": [
+		{
+			"name": "Create an emp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"firstName\": \"Alice\",\n      \"lastName\": \"Smith\",\n      \"email\": \"alice.smith@example.com\",\n      \"nic\": \"901234567V\",\n      \"designation\": \"Software Engineer\",\n      \"departmentId\": \"ENG\",\n      \"salary\": 75000.0\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all emps",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get emp by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/employees/6a0e5e8295f873713c491613",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees",
+						"6a0e5e8295f873713c491613"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Salary",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"firstName\": \"Alice\",\n      \"lastName\": \"Smith\",\n      \"email\": \"alice.smith@example.com\",\n      \"nic\": \"901234567V\",\n      \"designation\": \"Software Engineer\",\n      \"departmentId\": \"ENG\",\n      \"salary\": 100000.0\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/employees/6a0e5e8295f873713c491613",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees",
+						"6a0e5e8295f873713c491613"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deleting emp by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/employees/6a0e5e8295f873713c491613",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees",
+						"6a0e5e8295f873713c491613"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fake id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/employees/fakeid",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees",
+						"fakeid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validation errors",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"firstName\": \"\",\n      \"lastName\": \"Smith\",\n      \"email\": \"not-an-email\",\n      \"nic\": \"901234567V\",\n      \"designation\": \"Software Engineer\",\n      \"departmentId\": \"ENG\",\n      \"salary\": -75000.0\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

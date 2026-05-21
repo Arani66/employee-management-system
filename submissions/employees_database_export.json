@@ -1,0 +1,1 @@
+{"_id":{"$oid":"6a0e607395f873713c491614"},"firstName":"Alice","lastName":"Smith","email":"alice.smith@example.com","nic":"901234567V","dateOfJoining":{"$date":"2026-05-20T18:30:00Z"},"salary":100000.0,"departmentId":"ENG","designation":"Software Engineer","_class":"com.example.employee.model.Employee"}
