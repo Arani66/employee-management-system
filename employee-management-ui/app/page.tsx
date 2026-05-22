@@ -16,12 +16,16 @@ export default function Dashboard() {
     useEffect(() => {
         fetch(`${API_BASE}/api/employees?page=0&size=1000`)
             .then((r) => r.json())
-            .then((data) => setEmployees(data.content))
-            .catch(() => {})
+            .then((data) => {
+                setEmployees(data.content || []);
+            })
+            .catch(() => {
+                setEmployees([]);
+            })
             .finally(() => setLoading(false));
     }, []);
 
-    const deptCounts = employees.reduce<Record<string, number>>((acc, e) => {
+    const deptCounts = (employees || []).reduce<Record<string, number>>((acc, e) => {
         acc[e.departmentId] = (acc[e.departmentId] || 0) + 1;
         return acc;
     }, {});
