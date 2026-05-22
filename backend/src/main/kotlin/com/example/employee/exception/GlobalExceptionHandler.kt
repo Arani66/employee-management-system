@@ -1,5 +1,6 @@
 package com.example.employee.exception
 
+import com.mongodb.DuplicateKeyException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.ErrorResponse
@@ -22,5 +23,11 @@ class GlobalExceptionHandler {
             errormsg[error.field] = error.defaultMessage ?: "Invalid value"
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errormsg)
+    }
+
+    @ExceptionHandler(DuplicateKeyException::class)
+    fun handleDuplicateKey(ex: DuplicateKeyException): ResponseEntity<Map<String, String>> {
+        val errorMsg = mapOf("error" to "An employee with this email already exists.")
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMsg)
     }
 }

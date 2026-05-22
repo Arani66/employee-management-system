@@ -1,9 +1,9 @@
 "use client";
-// app/employees/[id]/delete/page.tsx
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { Employee } from "../../../../types";
+import {API_BASE} from "@/lib/api";
 
 export default function DeleteEmployee() {
     const router = useRouter();
@@ -16,7 +16,7 @@ export default function DeleteEmployee() {
     useEffect(() => {
         const fetchEmployee = async () => {
             try {
-                const res = await fetch(`http://localhost:8080/api/employees/${id}`);
+                const res = await fetch(`fetch(\`${API_BASE}/api/employees\`)/api/employees/${id}`);
                 if (!res.ok) throw new Error("Employee not found.");
                 setEmployee(await res.json());
             } catch (err: any) {
@@ -31,7 +31,7 @@ export default function DeleteEmployee() {
     const confirmDelete = async () => {
         setDeleting(true);
         try {
-            const res = await fetch(`http://localhost:8080/api/employees/${id}`, { method: "DELETE" });
+            const res = await fetch(`fetch(\`${API_BASE}/api/employees\`)/api/employees/${id}`, { method: "DELETE" });
             if (!res.ok) throw new Error("Failed to delete employee.");
             router.push("/employees");
             router.refresh();

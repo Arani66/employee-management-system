@@ -1,9 +1,9 @@
 "use client";
-// app/employees/[id]/page.tsx
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Employee } from "@/types";
+import {API_BASE} from "@/lib/api";
 
 const DEPT_LABELS: Record<string, string> = {
     ENG: "Engineering", HR: "Human Resources", FIN: "Finance", MKT: "Marketing",
@@ -24,7 +24,7 @@ export default function EmployeeDetails() {
     useEffect(() => {
         const fetchEmployee = async () => {
             try {
-                const res = await fetch(`http://localhost:8080/api/employees/${id}`);
+                const res = await fetch(`${API_BASE}/api/employees/${id}`);
                 if (!res.ok) throw new Error("Employee not found or has been removed.");
                 setEmployee(await res.json());
             } catch (err: any) {
@@ -70,8 +70,12 @@ export default function EmployeeDetails() {
                 {/* Avatar + actions */}
                 <div className="px-6 pb-5">
                     <div className="flex items-end justify-between -mt-10 mb-4">
-                        <div className="w-20 h-20 rounded-2xl bg-white border-4 border-white shadow-md flex items-center justify-center text-[#4F6EF7] text-2xl font-bold">
-                            {initials}
+                        <div className="w-20 h-20 rounded-2xl bg-white border-4 border-white shadow-md overflow-hidden flex items-center justify-center text-[#4F6EF7] text-2xl font-bold">
+                            {employee.profileImage ? (
+                                <img src={employee.profileImage} alt={`${employee.firstName} ${employee.lastName}`} className="w-full h-full object-cover"/>
+                            ) : (
+                                initials
+                            )}
                         </div>
                         <div className="flex items-center gap-2 pb-1">
                             <Link href="/employees" className="px-3 py-1.5 border border-[#E8EAED] text-xs font-medium text-[#6B7280] rounded-lg hover:bg-gray-50 transition-colors">
@@ -100,7 +104,7 @@ export default function EmployeeDetails() {
                     <div className="border-t border-[#F4F5F7] pt-5 grid grid-cols-2 gap-5">
                         <InfoField label="Email Address" value={employee.email} />
                         <InfoField label="NIC" value={employee.nic} mono />
-                        <InfoField label="Base Salary" value={`$${employee.salary.toLocaleString()}`} />
+                        <InfoField label="Base Salary" value={`Rs${employee.salary.toLocaleString()}`} />
                         <InfoField label="Employee ID" value={employee.employeeId} mono />
                     </div>
                 </div>

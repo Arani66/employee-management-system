@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+
+  mongodb:
+    image: mongo:7
+    container_name: employee_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - employee_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: employee_backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/employee_db
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - employee_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: employee_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8080
+    depends_on:
+      - backend
+    networks:
+      - employee_network
+
+volumes:
+  mongo_data:
+
+networks:
+  employee_network:
+    driver: bridge

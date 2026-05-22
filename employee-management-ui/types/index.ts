@@ -8,4 +8,5 @@ export interface Employee {
     departmentId: string;
     salary: number;
     dateOfJoining?: string;
+    profileImage?: string;
 }

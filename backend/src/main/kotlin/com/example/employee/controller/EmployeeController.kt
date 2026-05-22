@@ -4,6 +4,7 @@ import com.example.employee.dto.EmployeeDto
 import com.example.employee.model.Employee
 import com.example.employee.service.EmployeeService
 import jakarta.validation.Valid
+import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
 
@@ -31,15 +33,20 @@ class EmployeeController (private val employeeService: EmployeeService) {
             salary = dto.salary,
             designation = dto.designation,
             departmentId = dto.departmentId,
-            dateOfJoining = LocalDate.now()
+            dateOfJoining = LocalDate.now(),
+            profileImage = dto.profileImage
         )
         val savedEmployee = employeeService.addEmployee(employeeData)
         return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployee)
     }
 
     @GetMapping
-    fun getAllEmployees(): ResponseEntity<List<Employee>> {
-        val employees = employeeService.getAllEmployees()
+    fun getAllEmployees(
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int,
+        @RequestParam(defaultValue = "") search: String
+    ): ResponseEntity<Page<Employee>> {
+        val employees = employeeService.getAllEmployees(page, size, search)
         return ResponseEntity.ok(employees)
     }
 
@@ -60,7 +67,8 @@ class EmployeeController (private val employeeService: EmployeeService) {
             designation = dto.designation,
             departmentId = dto.departmentId,
             dateOfJoining = LocalDate.now(),
-            nic = dto.nic
+            nic = dto.nic,
+            profileImage = dto.profileImage
         )
         val updatedEmployee = employeeService.updateEmployee(id, updatedDate)
         return ResponseEntity.ok(updatedEmployee)

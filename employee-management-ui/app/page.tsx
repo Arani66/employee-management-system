@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Employee } from "@/types";
+import {API_BASE} from "@/lib/api";
 
 const DEPT_LABELS: Record<string, string> = {
     ENG: "Engineering", HR: "Human Resources", FIN: "Finance", MKT: "Marketing",
@@ -13,9 +14,9 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/employees")
+        fetch(`${API_BASE}/api/employees?page=0&size=1000`)
             .then((r) => r.json())
-            .then(setEmployees)
+            .then((data) => setEmployees(data.content))
             .catch(() => {})
             .finally(() => setLoading(false));
     }, []);

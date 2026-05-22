@@ -13,5 +13,6 @@ data class EmployeeDto (
     @field:NotBlank val designation: String,
     @field:NotBlank val departmentId: String,
     @field:Positive val salary: Double,
+    val profileImage: String? = null
 
     )
